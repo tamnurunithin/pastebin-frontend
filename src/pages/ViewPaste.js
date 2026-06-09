@@ -9,22 +9,21 @@ function ViewPaste() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetchPaste();
-  }, []);
-
-  const fetchPaste = async () => {
-    try {
-      const res = await getPaste(id);
-
-      setContent(res.data.content);
-    } catch (err) {
-      if (err.response?.status === 410) {
-        setError("Paste Expired");
-      } else {
-        setError("Paste Not Found");
+    const fetchPaste = async () => {
+      try {
+        const res = await getPaste(id);
+        setContent(res.data.content);
+      } catch (err) {
+        if (err.response?.status === 410) {
+          setError("Paste Expired");
+        } else {
+          setError("Paste Not Found");
+        }
       }
-    }
-  };
+    };
+
+    fetchPaste();
+  }, [id]);
 
   return (
     <div className="container">
